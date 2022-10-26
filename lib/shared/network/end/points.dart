@@ -1,0 +1,12 @@
+var token;
+const LOGIN = 'login';
+const REGISTER = 'register';
+const HOME = 'home';
+const FAVORITE = 'favorites';
+const PROFILE = 'profile';
+const UPDATE_PROFILE = 'update-profile';
+const SEARCH = 'products/search';
+const CATEGORY = 'categories';
+const ORDERS = 'orders';
+const NOTIFICATION = 'notifications';
+const CONTACT = 'complaints';
