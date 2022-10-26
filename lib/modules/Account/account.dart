@@ -3,11 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_store/modules/Cart/cart.dart';
 import 'package:shop_store/modules/Favorite/favorite.dart';
 import 'package:shop_store/modules/contact/contact.dart';
+import 'package:shop_store/modules/login/login.dart';
 import 'package:shop_store/modules/notification/notification.dart';
 import 'package:shop_store/modules/orders/orders.dart';
 import 'package:shop_store/shared/components/components.dart';
 import 'package:shop_store/shared/cubit/cubit.dart';
 import 'package:shop_store/shared/cubit/states.dart';
+import 'package:shop_store/shared/network/local/cache.dart';
 
 class Account extends StatelessWidget {
   const Account({Key? key}) : super(key: key);
@@ -153,6 +155,14 @@ class Account extends StatelessWidget {
                       ),
                       //height: 700,
                     ),
+                    const Spacer(),
+                    defButton(function:(){
+                      CacheHelper.removeData(key: 'token').then((value) {
+                      if (value) {
+                      navigateAndFinish(context, Login());
+                      }
+                      });
+                    }, text:'Logout',background: Colors.grey[100]!,textColor: Colors.purple)
                   ]),
                 ),
               ),

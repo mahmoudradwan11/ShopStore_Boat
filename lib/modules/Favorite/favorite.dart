@@ -11,20 +11,32 @@ class Favorite extends StatelessWidget {
   Widget build(BuildContext context){
     return BlocConsumer<BoatCubit, BoatStates>(
       listener: (context, state){},
-      builder: (context, state){
+      builder: (context, state) {
         var cubit = BoatCubit.get(context);
-        var favorite= cubit.favorites;
-        return Scaffold(
-          appBar:AppBar(
-            title:const Text('Favorite'),
-          ),
-          body: ListView.separated(
-              itemBuilder:(context,index)=>builtFavoriteItem(favorite[index], context),
-              separatorBuilder:(context,index)=>builtDivider(),
-              itemCount:favorite.length
-          ),
-        );
-      },
+        var favorite = cubit.favorites;
+        if (favorite.isEmpty) {
+          return Scaffold(
+              appBar: AppBar(
+                title: const Text('Cart'),
+              ),
+              body:const Center(
+            child: Image(image: AssetImage('images/favo.png'),),
+              ),
+          );
+        } else {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Favorite'),
+            ),
+            body: ListView.separated(
+                itemBuilder: (context, index) =>
+                    builtFavoriteItem(favorite[index], context),
+                separatorBuilder: (context, index) => builtDivider(),
+                itemCount: favorite.length
+            ),
+          );
+        }
+      }
     );
   }
 }

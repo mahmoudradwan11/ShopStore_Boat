@@ -11,20 +11,32 @@ class Cart extends StatelessWidget {
   Widget build(BuildContext context){
     return BlocConsumer<BoatCubit, BoatStates>(
       listener: (context, state){},
-      builder: (context, state){
+      builder: (context, state) {
         var cubit = BoatCubit.get(context);
         var cart = cubit.cart;
-        return Scaffold(
-          appBar:AppBar(
-            title:const Text('Cart'),
+        if (cart.isEmpty) {
+          return Scaffold(
+              appBar: AppBar(
+              title: const Text('Cart'),
+        ),
+        body:const Center(
+            child: Image(image: AssetImage('images/cart_empty.png'),),
           ),
-          body: ListView.separated(
-              itemBuilder:(context,index)=>buildCartItem(cart[index], context),
-              separatorBuilder:(context,index)=>builtDivider(),
-              itemCount:cart.length
-          ),
-        );
-      },
+          );
+        } else {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Cart'),
+            ),
+            body: ListView.separated(
+                itemBuilder: (context, index) =>
+                    buildCartItem(cart[index], context),
+                separatorBuilder: (context, index) => builtDivider(),
+                itemCount: cart.length
+            ),
+          );
+        }
+      }
     );
   }
 }
