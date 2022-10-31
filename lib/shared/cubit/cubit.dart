@@ -293,4 +293,26 @@ class BoatCubit extends Cubit<BoatStates>
       emit(ErrorContact());
     });
   }
+  void updateUserData({
+    required String name,
+    required String email,
+    required String phone,
+  }) {
+    DioHelper.putData(
+      url: UPDATE_PROFILE,
+      token: token,
+      data: {
+        'name': name,
+        'email': email,
+        'phone': phone,
+      },
+    ).then((value) {
+      userModel = LoginModel.fromJson(value.data);
+      //printFullText(userModel!.data!.name!);
+      emit(UserUpdateSuccessState(userModel!));
+    }).catchError((error) {
+      print(error.toString());
+      emit(UserUpdateFailedState());
+    });
+  }
 }

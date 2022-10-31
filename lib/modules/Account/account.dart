@@ -20,8 +20,19 @@ class Account extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = BoatCubit.get(context);
+        var scaffoldKey = GlobalKey<ScaffoldState>();
+        var formKey = GlobalKey<FormState>();
+        var nameController = TextEditingController();
+        var emailController = TextEditingController();
+        var phoneController = TextEditingController();
+        var model = cubit.userModel;
+        nameController.text = model!.data!.name!;
+        emailController.text = model.data!.email!;
+        phoneController.text = model.data!.phone!;
         return Scaffold(
-          body: Column(children: [
+          key: scaffoldKey,
+          body: Column(
+              children: [
             Expanded(
               flex: 1,
               child: Container(
@@ -41,10 +52,97 @@ class Account extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            cubit.userModel!.data!.name!,
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 15),
+                          Row(
+                            children: [
+                              Text(
+                                cubit.userModel!.data!.name!,
+                                style: const TextStyle(
+                                    color: Colors.white, fontSize: 15),
+                              ),
+                              const SizedBox(
+                                width: 90,
+                              ),
+                              IconButton(onPressed:(){
+                                scaffoldKey.currentState!.showBottomSheet((context) =>Container(
+                                  decoration:BoxDecoration(
+                                    color: Colors.grey[100],
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  height: 290,
+                                  child: SingleChildScrollView(
+                                    child: Form(
+                                      key: formKey,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: Column(
+                                          children: [
+                                            defaultFieldForm(
+                                              show:false,
+                                              controller:nameController,
+                                              keyboard:TextInputType.name,
+                                              valid:(value){
+                                                if(value.isEmpty){
+                                                  return 'Name Must Not Be Empty';
+                                                }
+                                                return null;
+                                              },
+                                              label:'Name',
+                                              prefix:Icons.person,
+                                            ),
+                                            const SizedBox(
+                                              height: 15,
+                                            ),
+                                            defaultFieldForm(
+                                              show:false,
+                                              controller:emailController,
+                                              keyboard:TextInputType.emailAddress,
+                                              valid:(value){
+                                                if(value.isEmpty){
+                                                  return 'Email Must Not Be Empty';
+                                                }
+                                                return null;
+                                              },
+                                              label:'Email',
+                                              prefix:Icons.email,
+                                            ),
+                                            const SizedBox(
+                                              height: 15,
+                                            ),
+                                            defaultFieldForm(
+                                              show:false,
+                                              controller:phoneController,
+                                              keyboard:TextInputType.phone,
+                                              valid:(value){
+                                                if(value.isEmpty){
+                                                  return 'Phone Must Not Be Empty';
+                                                }
+                                                return null;
+                                              },
+                                              label:'Phone',
+                                              prefix:Icons.mobile_friendly,
+                                            ),
+                                            const SizedBox(
+                                              height: 15,
+                                            ),
+                                            defButton(function:(){
+                                              if(formKey.currentState!.validate()){
+                                                cubit.updateUserData(
+                                                  name:nameController.text,
+                                                  email:emailController.text,
+                                                  phone:phoneController.text,
+                                                );
+                                              }
+                                            }, text:'Update')
+                                          ],
+                                        ),
+                                      ),
+
+                                    ),
+                                  ),
+                                ),
+                                );
+                              }, icon:const Icon(Icons.edit,size: 30,color: Colors.white,))
+                            ],
                           ),
                           Text(
                             cubit.userModel!.data!.email!,

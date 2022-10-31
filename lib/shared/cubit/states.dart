@@ -1,4 +1,5 @@
 import 'package:shop_store/models/login/login_model.dart';
+import 'package:shop_store/shared/cubit/cubit.dart';
 abstract class BoatStates {}
 class InitialState extends BoatStates{}
 class ChangeScreenIndex extends BoatStates{}
@@ -36,4 +37,9 @@ class GetNotification extends BoatStates{}
 class ErrorGetNotification extends BoatStates{}
 class SendContact extends BoatStates{}
 class ErrorContact extends BoatStates{}
+class UserUpdateSuccessState extends BoatStates{
+  LoginModel? userModel;
+  UserUpdateSuccessState(this.userModel);
+}
+class UserUpdateFailedState extends BoatStates{}
 
