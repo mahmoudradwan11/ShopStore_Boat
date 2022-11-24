@@ -12,7 +12,7 @@ import 'package:shop_store/shared/network/local/cache.dart';
 import 'package:shop_store/shared/network/remote/dio_helper.dart';
 import 'package:shop_store/shared/styles/themes.dart';
 import 'layout/home.dart';
-
+// this code is written by Eng Mahmoud Radwan
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   DioHelper.init();
