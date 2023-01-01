@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
               darkTheme: darkTheme,
               home: AnimatedSplashScreen(
                 splash: logo(),
-                duration: 2000,
+                duration: 2500,
                 nextScreen: startWidget!,
                 splashTransition: SplashTransition.scaleTransition,
                 backgroundColor: Colors.white,
